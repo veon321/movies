@@ -22,6 +22,7 @@ body {
   display: flex;
   flex-direction: column;
   background-color: rgb(51, 48, 48);
+  padding: 20px;
 }
 
 .cards-container {
