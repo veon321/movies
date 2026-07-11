@@ -1,5 +1,4 @@
-export function renderMovies(movies) {
-  const container = document.getElementById("cards-container");
+export function renderMovies(movies, container) {
   container.innerHTML = "";
 
   movies.forEach((movie) => {
