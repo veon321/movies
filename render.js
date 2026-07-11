@@ -13,7 +13,7 @@ export function renderMovies(movies, container) {
       <div class="date-rate-container">
         <p class="movie-date">${movie.Year}</p>
         <p class="movie-rate"></p>
-        <button type="button" class="add-button">Dodaj</button>
+        <button type="button" class="add-button" id="add-button">Dodaj</button>
       </div>
     `;
 

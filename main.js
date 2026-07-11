@@ -13,3 +13,13 @@ async function getData() {
 }
 
 searchButton.addEventListener("click", getData);
+
+container.addEventListener("click", (event) => {
+  if (event.target.classList.contains("add-button")) {
+    addToFavorites(event.target);
+  }
+});
+
+const addToFavorites = (button) => {
+  console.log("test", button);
+};
