@@ -3,6 +3,7 @@ import { renderMovies } from "./render.js";
 
 const searchButton = document.getElementById("search-button");
 const container = document.getElementById("cards-container");
+const favorites = document.getElementById("favorites");
 
 async function getData() {
   const searchInput = document.getElementById("search-text");
@@ -20,6 +21,23 @@ container.addEventListener("click", (event) => {
   }
 });
 
+favorites.addEventListener("click", async (event) => {
+  const favoriteItems = JSON.parse(localStorage.getItem("favorites")) || [];
+  const movies = await searchMovies(favoriteItems);
+  renderMovies(movies, container);
+  console.log(favoriteItems);
+});
+
 const addToFavorites = (button) => {
-  console.log("test", button);
+  const parent = button.parentElement.parentElement;
+  const movieName = parent.querySelector(".movie-name").textContent;
+
+  const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+  if (!favorites.includes(movieName)) {
+    favorites.push(movieName);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  } else {
+    console.log("Ten film już jest w ulubionych");
+  }
 };
