@@ -1,6 +1,10 @@
 export function renderMovies(movies, container, favorites) {
   container.innerHTML = "";
 
+  if (!movies) {
+    return;
+  }
+
   movies.forEach((movie) => {
     const card = document.createElement("div");
     card.classList.add("card");
@@ -13,7 +17,7 @@ export function renderMovies(movies, container, favorites) {
       <div class="date-rate-container">
         <p class="movie-date">${movie.Year}</p>
         <p class="movie-rate"></p>
-        <button type="button" class="add-button">Dodaj</button>
+        <button type="button" class="add-button">Add</button>
       </div>
     `;
 
@@ -25,7 +29,7 @@ export function renderMovies(movies, container, favorites) {
       );
 
       if (isAlreadyFavorite) {
-        button.textContent = "Ulubiony";
+        button.textContent = "Favorite";
       }
     }
 

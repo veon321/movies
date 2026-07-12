@@ -4,38 +4,57 @@ import { renderMovies } from "./render.js";
 const searchButton = document.getElementById("search-button");
 const container = document.getElementById("cards-container");
 const favoritesButton = document.getElementById("favorites");
+const allButton = document.getElementById("all-button");
 
-function isFavorites(movieName) {
-  const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-  return favorites.some((movie) => movie.title === movieName);
+function getFavorites() {
+  return JSON.parse(localStorage.getItem("favorites")) || [];
 }
 
-async function getData() {
+function saveFavorites(favorites) {
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+}
+
+function getMovieInfoFromButton(button) {
+  const parent = button.parentElement.parentElement;
+  return {
+    title: parent.querySelector(".movie-name").textContent,
+    date: parent.querySelector(".movie-date").textContent,
+    poster: parent.querySelector("img")?.src,
+  };
+}
+
+async function handleSearch() {
   const searchInput = document.getElementById("search-text");
-  const movieName = searchInput.value;
+  const movieName = searchInput.value.trim();
+
+  if (!movieName) {
+    container.innerHTML = "";
+    return;
+  }
 
   const movies = await searchMovies(movieName);
-  const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  const favorites = getFavorites();
 
   renderMovies(movies, container, favorites);
 }
 
-searchButton.addEventListener("click", getData);
+searchButton.addEventListener("click", handleSearch);
+allButton.addEventListener("click", handleSearch);
 
 container.addEventListener("click", (event) => {
   if (event.target.classList.contains("add-button")) {
-    if (event.target.textContent === "Ulubiony") {
+    if (event.target.textContent === "Favorite") {
       removeFromFavorites(event.target);
-      event.target.textContent = "Dodaj";
+      event.target.textContent = "Add";
     } else {
       addToFavorites(event.target);
-      event.target.textContent = "Ulubiony";
+      event.target.textContent = "Favorite";
     }
   }
 });
 
 favoritesButton.addEventListener("click", () => {
-  const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  const favorites = getFavorites();
   const mappedFavorites = favorites.map((movie) => ({
     Title: movie.title,
     Year: movie.date,
@@ -45,26 +64,17 @@ favoritesButton.addEventListener("click", () => {
 });
 
 const addToFavorites = (button) => {
-  const parent = button.parentElement.parentElement;
-  const movieName = parent.querySelector(".movie-name").textContent;
-  const date = parent.querySelector(".movie-date").textContent;
-  const poster = parent.querySelector("img").src;
+  const { title, date, poster } = getMovieInfoFromButton(button);
 
-  const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-  favorites.push({ title: movieName, date: date, poster: poster });
-  localStorage.setItem("favorites", JSON.stringify(favorites));
-  console.log("Dodano do ulubionych:", movieName);
+  const favorites = getFavorites();
+  favorites.push({ title, date, poster });
+  saveFavorites(favorites);
 };
 
 const removeFromFavorites = (button) => {
-  const parent = button.parentElement.parentElement;
-  const movieName = parent.querySelector(".movie-name").textContent;
+  const { title } = getMovieInfoFromButton(button);
 
-  const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-  const updatedFavorites = favorites.filter(
-    (movie) => movie.title !== movieName,
-  );
-
-  localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-  console.log("Usunięto z ulubionych:", movieName);
+  const favorites = getFavorites();
+  const updatedFavorites = favorites.filter((movie) => movie.title !== title);
+  saveFavorites(updatedFavorites);
 };
