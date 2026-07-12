@@ -1,6 +1,6 @@
 const API_KEY = "9df541c9";
 
-export async function searchMovies(movieName) {
+export async function searchMovies(movieName, year) {
   if (Array.isArray(movieName)) {
     const results = await Promise.all(
       movieName.map(async (movie) => {
@@ -13,8 +13,9 @@ export async function searchMovies(movieName) {
     );
     return results;
   } else {
+    const yearParam = year ? `&y=${year}` : "";
     const response = await fetch(
-      `https://www.omdbapi.com/?apikey=${API_KEY}&s=${movieName}`,
+      `https://www.omdbapi.com/?apikey=${API_KEY}&s=${movieName}${yearParam}`,
     );
     const data = await response.json();
     return data.Search;

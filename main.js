@@ -25,14 +25,16 @@ function getMovieInfoFromButton(button) {
 
 async function handleSearch() {
   const searchInput = document.getElementById("search-text");
+  const yearInput = document.getElementById("search-year");
   const movieName = searchInput.value.trim();
+  const year = yearInput.value.trim();
 
   if (!movieName) {
     container.innerHTML = "";
     return;
   }
 
-  const movies = await searchMovies(movieName);
+  const movies = await searchMovies(movieName, year);
   const favorites = getFavorites();
 
   renderMovies(movies, container, favorites);
