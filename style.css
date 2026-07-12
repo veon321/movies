@@ -24,9 +24,15 @@ body {
   display: flex;
   flex-direction: column;
   text-align: center;
+  justify-content: center;
+  align-items: center;
   background-color: rgb(51, 48, 48);
   padding: 20px;
   width: 200px;
+}
+
+.date-rate-container {
+  margin-top: auto;
 }
 
 .img-container {
@@ -45,4 +51,8 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 30px;
+}
+
+.card button {
+  border: none;
 }

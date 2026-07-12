@@ -24,7 +24,13 @@ searchButton.addEventListener("click", getData);
 
 container.addEventListener("click", (event) => {
   if (event.target.classList.contains("add-button")) {
-    addToFavorites(event.target);
+    if (event.target.textContent === "Ulubiony") {
+      removeFromFavorites(event.target);
+      event.target.textContent = "Dodaj";
+    } else {
+      addToFavorites(event.target);
+      event.target.textContent = "Ulubiony";
+    }
   }
 });
 
@@ -44,14 +50,21 @@ const addToFavorites = (button) => {
   const date = parent.querySelector(".movie-date").textContent;
   const poster = parent.querySelector("img").src;
 
-  const alreadyFavorite = isFavorites(movieName);
+  const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  favorites.push({ title: movieName, date: date, poster: poster });
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  console.log("Dodano do ulubionych:", movieName);
+};
 
-  if (!alreadyFavorite) {
-    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-    favorites.push({ title: movieName, date: date, poster: poster });
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-    console.log("Dodano do ulubionych:", movieName);
-  } else {
-    console.log("Ten film już jest w ulubionych");
-  }
+const removeFromFavorites = (button) => {
+  const parent = button.parentElement.parentElement;
+  const movieName = parent.querySelector(".movie-name").textContent;
+
+  const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  const updatedFavorites = favorites.filter(
+    (movie) => movie.title !== movieName,
+  );
+
+  localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+  console.log("Usunięto z ulubionych:", movieName);
 };
