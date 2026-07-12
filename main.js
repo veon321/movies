@@ -24,19 +24,23 @@ container.addEventListener("click", (event) => {
 favorites.addEventListener("click", async (event) => {
   const favoriteItems = JSON.parse(localStorage.getItem("favorites")) || [];
   const movies = await searchMovies(favoriteItems);
-  renderMovies(movies, container);
+  renderMovies(movies, container, true);
   console.log(favoriteItems);
 });
 
 const addToFavorites = (button) => {
   const parent = button.parentElement.parentElement;
   const movieName = parent.querySelector(".movie-name").textContent;
+  const date = parent.querySelector(".movie-date").textContent;
 
   const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-  if (!favorites.includes(movieName)) {
-    favorites.push(movieName);
+  const alreadyExists = favorites.some((movie) => movie.title === movieName);
+
+  if (!alreadyExists) {
+    favorites.push({ title: movieName, date: date });
     localStorage.setItem("favorites", JSON.stringify(favorites));
+    console.log("Dodano do ulubionych:", movieName);
   } else {
     console.log("Ten film już jest w ulubionych");
   }

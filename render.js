@@ -1,4 +1,4 @@
-export function renderMovies(movies, container) {
+export function renderMovies(movies, container, favorites) {
   container.innerHTML = "";
 
   movies.forEach((movie) => {
@@ -16,6 +16,11 @@ export function renderMovies(movies, container) {
         <button type="button" class="add-button" id="add-button">Dodaj</button>
       </div>
     `;
+
+    if (favorites) {
+      const button = card.querySelector(".add-button");
+      button.style.display = "none";
+    }
 
     container.appendChild(card);
   });
