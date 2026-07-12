@@ -13,13 +13,20 @@ export function renderMovies(movies, container, favorites) {
       <div class="date-rate-container">
         <p class="movie-date">${movie.Year}</p>
         <p class="movie-rate"></p>
-        <button type="button" class="add-button" id="add-button">Dodaj</button>
+        <button type="button" class="add-button">Dodaj</button>
       </div>
     `;
 
+    const button = card.querySelector(".add-button");
+
     if (favorites) {
-      const button = card.querySelector(".add-button");
-      button.style.display = "none";
+      const isAlreadyFavorite = favorites.some(
+        (favorite) => favorite.title === movie.Title,
+      );
+
+      if (isAlreadyFavorite) {
+        button.textContent = "Ulubiony";
+      }
     }
 
     container.appendChild(card);

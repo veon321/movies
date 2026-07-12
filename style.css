@@ -23,6 +23,7 @@ body {
 .card {
   display: flex;
   flex-direction: column;
+  text-align: center;
   background-color: rgb(51, 48, 48);
   padding: 20px;
   width: 200px;
