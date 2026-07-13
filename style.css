@@ -59,5 +59,6 @@ body {
 
 button {
   border: none;
-  padding: 10px;
+  padding: 4px 30px;
+  cursor: pointer;
 }
