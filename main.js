@@ -45,12 +45,16 @@ allButton.addEventListener("click", handleSearch);
 
 container.addEventListener("click", (event) => {
   if (event.target.classList.contains("add-button")) {
-    if (event.target.textContent === "Favorite") {
+    const isFavorite = event.target.classList.contains("favorite");
+
+    if (isFavorite) {
       removeFromFavorites(event.target);
       event.target.textContent = "Add";
+      event.target.classList.remove("favorite");
     } else {
       addToFavorites(event.target);
       event.target.textContent = "Favorite";
+      event.target.classList.add("favorite");
     }
   }
 });

@@ -66,3 +66,7 @@ button {
 button:hover {
   background-color: antiquewhite;
 }
+
+.favorite {
+  background-color: green;
+}

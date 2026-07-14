@@ -42,6 +42,7 @@ export function renderMovies(movies, container, favorites) {
 
       if (isAlreadyFavorite) {
         button.textContent = "Favorite";
+        button.classList.add("favorite");
       }
     }
 
