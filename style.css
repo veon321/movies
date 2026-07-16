@@ -106,7 +106,7 @@ button:hover {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track {
