@@ -130,7 +130,7 @@ html {
 
 .search-container {
   display: flex;
-  gap: 12px;
+  gap: 14px;
   justify-content: center;
   width: 100%;
   margin: 45px;
